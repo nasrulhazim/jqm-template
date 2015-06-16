@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Data Collector</title>
+
+	<!-- Include meta tag to ensure proper rendering and touch zooming -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Include jQuery Mobile stylesheets -->
+	<link rel="stylesheet" href="components/jquery-mobile/jquery.mobile-1.4.5.min.css">
+
+</head>
+<body>
+	<div data-role="page">
+
+	  <div data-role="header">
+	    <h1>Data Collector v0.1</h1>
+	  </div>
+
+	  <div data-role="main" class="ui-content">
+	  	<form action="http://localhost/data-collector/back-end/submit.php" method="POST" enctype="multipart/form-data">
+	  		<label>Title</label>
+	  		<input type="text" id="dc-title" name="dc-title">
+
+	  		<label>Description</label>
+	  		<textarea id="dc-description" name="dc-description"></textarea>
+
+	  		<label>Photo</label>
+	  		<input type="file" id="dc-photo" name="dc-photo">
+
+	  		<label>GPS</label>
+		    <div class="ui-btn ui-mini" onclick="getLocation()">Get GPS Coordinate</div>
+
+		    <p id="gps-coordinate-label"></p>
+		    <input type="hidden" id="gps-coordinate-latitude">
+		    <input type="hidden" id="gps-coordinate-longitude">
+
+	    </form>
+	  </div>
+
+	  <div data-role="footer" data-position="fixed">
+	    <h1>Copyright &copy; 2015 - Data Collector</h1>
+	  </div>
+
+	</div>
+
+	<!-- Include the jQuery library -->
+	<script src="components/jquery/jquery-1.11.3.min.js"></script>
+
+	<!-- Include the jQuery Mobile library -->
+	<script src="components/jquery-mobile/jquery.mobile-1.4.5.min.js"></script>
+
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$('#dc-description').attr('style','height: 158px; margin-top: 8px; margin-bottom: 8px;')
+		});
+		function getLocation() {
+		    if (navigator.geolocation) {
+		        navigator.geolocation.getCurrentPosition(showPosition);
+		    } else {
+		        alert("Geolocation is not supported by this browser.");
+		    }
+		}
+		function showPosition(position) {
+			$('#gps-coordinate-label').html("Latitude: " + position.coords.latitude + ", Longitude: " + position.coords.longitude);
+			$('#gps-coordinate-latitude').val(position.coords.latitude);
+			$('#gps-coordinate-longitude').val(position.coords.longitude);
+		}
+	</script>
+</body>
+</html>
